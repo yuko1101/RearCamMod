@@ -2,8 +2,6 @@ package io.github.yuko1101.rearcammod.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import io.github.yuko1101.rearcammod.RearCamMod;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
