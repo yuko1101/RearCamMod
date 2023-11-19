@@ -12,7 +12,11 @@
   "icon": "icon.png",
 
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "client": [
+      "io.github.yuko1101.rearcammod.fabric.RearCamModFabric"
+    ]
+  },
   "depends": {
     "fabricloader": ">=0.14.24",
     "minecraft": ">=1.20.1"
