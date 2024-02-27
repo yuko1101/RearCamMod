@@ -20,11 +20,6 @@ public class RearCamModForge {
     }
 
     @SubscribeEvent
-    public void onKeyRegister(RegisterKeyMappingsEvent event) {
-        event.register(RearCamMod.rearCamKey);
-    }
-
-    @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         RearCamMod.onKeyStateUpdate();
     }
