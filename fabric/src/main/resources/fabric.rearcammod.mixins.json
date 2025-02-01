@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "io.github.yuko1101.rearcammod.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "GameOptionsMixin",
+    "MinecraftClientMixin"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
