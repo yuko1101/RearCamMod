@@ -26,15 +26,21 @@ jobs:
       - name: Build with Gradle
         run: gradle build
       
-      - name: Upload Artifact
+      - name: Upload Artifact (Fabric)
         uses: actions/upload-artifact@v4
         with:
-          name: artifact
-          path: build/libs/*.jar
+          name: fabric
+          path: fabric/build/libs/*.jar
+
+      - name: Upload Artifact (Forge)
+        uses: actions/upload-artifact@v4
+        with:
+          name: forge
+          path: forge/build/libs/*.jar
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          gh release create ${{github.ref_name}} --generate-notes build/libs/*.jar
+          gh release create ${{github.ref_name}} --generate-notes fabric/build/libs/*.jar forge/build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
