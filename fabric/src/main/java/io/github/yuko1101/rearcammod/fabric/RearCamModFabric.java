@@ -12,8 +12,6 @@ public class RearCamModFabric implements ClientModInitializer {
 
         KeyBindingHelper.registerKeyBinding(RearCamMod.rearCamKey);
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-                RearCamMod.onKeyStateUpdate();
-        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> RearCamMod.onKeyStateUpdate());
     }
 }
