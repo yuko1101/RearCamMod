@@ -1,26 +1,32 @@
+import net.fabricmc.loom.api.LoomGradleExtensionAPI
+
 plugins {
-    id 'dev.architectury.loom' version '1.9-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id("dev.architectury.loom") version "1.9-SNAPSHOT" apply false
+    id("architectury-plugin") version "3.4-SNAPSHOT"
+    id("com.github.johnrengelman.shadow") version "8.1.1" apply false
+    java
+    `maven-publish`
 }
 
 architectury {
-    minecraft = project.minecraft_version
+    minecraft = project.properties["minecraft_version"] as String
 }
 
 allprojects {
-    group = rootProject.maven_group
-    version = rootProject.mod_version
+    group = rootProject.properties["maven_group"]!!
+    version = rootProject.properties["mod_version"]!!
 }
 
 subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
+    apply(plugin = "dev.architectury.loom")
+    apply(plugin = "architectury-plugin")
+    apply(plugin = "maven-publish")
+
+    val loom = extensions.getByName("loom") as LoomGradleExtensionAPI
 
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
-        archivesName = "$rootProject.archives_name-$project.name"
+        archivesName = "${rootProject.properties["archives_name"]!!}-${project.name}"
     }
 
     repositories {
@@ -32,11 +38,14 @@ subprojects {
     }
 
     dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.layered {
-            mappings "net.fabricmc:yarn:$rootProject.yarn_mappings:v2"
-            mappings "dev.architectury:yarn-mappings-patch-neoforge:$rootProject.yarn_mappings_patch_neoforge"
-        }
+        val minecraft = configurations.getByName("minecraft")
+        val mappings = configurations.getByName("mappings")
+
+        minecraft("net.minecraft:minecraft:${rootProject.properties["minecraft_version"]!!}")
+        mappings(loom.layered {
+            mappings("net.fabricmc:yarn:${rootProject.properties["yarn_mappings"]!!}:v2")
+            mappings("dev.architectury:yarn-mappings-patch-neoforge:${rootProject.properties["yarn_mappings_patch_neoforge"]!!}")
+        })
     }
 
     java {
@@ -49,16 +58,16 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
+    tasks.withType<JavaCompile>().configureEach {
+        options.release = 21
     }
 
     // Configure Maven publishing.
     publishing {
         publications {
-            mavenJava(MavenPublication) {
+            create<MavenPublication>("mavenJava") {
                 artifactId = base.archivesName.get()
-                from components.java
+                from(components["java"])
             }
         }
 
