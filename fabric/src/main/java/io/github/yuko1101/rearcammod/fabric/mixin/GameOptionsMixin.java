@@ -26,11 +26,13 @@ public class GameOptionsMixin {
     public void loadHook(CallbackInfo ci) {
         try {
             var clazz = Class.forName("net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper", false, this.getClass().getClassLoader());
-            clazz.getDeclaredMethod("registerKeyBinding", KeyBinding.class).invoke(null, RearCamMod.rearCamKey);
+            for (var keyBinding : RearCamMod.getKeyBindings()) {
+                clazz.getDeclaredMethod("registerKeyBinding", KeyBinding.class).invoke(null, keyBinding);
+            }
         } catch (ReflectiveOperationException e) {
             // TODO: add translations for keybindings to the game
             ArrayList<KeyBinding> newKeysAll = new ArrayList<>(List.of(allKeys));
-            newKeysAll.add(RearCamMod.rearCamKey);
+            newKeysAll.addAll(RearCamMod.getKeyBindings());
             allKeys = newKeysAll.toArray(new KeyBinding[0]);
         }
     }

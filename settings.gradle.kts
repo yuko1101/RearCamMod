@@ -11,4 +11,4 @@ rootProject.name = "rearcammod"
 
 include("common")
 include("fabric")
-include("neoforge")
+// include("neoforge")
