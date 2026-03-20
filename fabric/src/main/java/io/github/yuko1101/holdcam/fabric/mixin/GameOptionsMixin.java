@@ -1,6 +1,6 @@
-package io.github.yuko1101.rearcammod.fabric.mixin;
+package io.github.yuko1101.holdcam.fabric.mixin;
 
-import io.github.yuko1101.rearcammod.RearCamMod;
+import io.github.yuko1101.holdcam.HoldCam;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import org.spongepowered.asm.mixin.Final;
@@ -26,13 +26,13 @@ public class GameOptionsMixin {
     public void loadHook(CallbackInfo ci) {
         try {
             var clazz = Class.forName("net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper", false, this.getClass().getClassLoader());
-            for (var keyBinding : RearCamMod.getKeyBindings()) {
+            for (var keyBinding : HoldCam.getKeyBindings()) {
                 clazz.getDeclaredMethod("registerKeyBinding", KeyBinding.class).invoke(null, keyBinding);
             }
         } catch (ReflectiveOperationException e) {
             // TODO: add translations for keybindings to the game
             ArrayList<KeyBinding> newKeysAll = new ArrayList<>(List.of(allKeys));
-            newKeysAll.addAll(RearCamMod.getKeyBindings());
+            newKeysAll.addAll(HoldCam.getKeyBindings());
             allKeys = newKeysAll.toArray(new KeyBinding[0]);
         }
     }

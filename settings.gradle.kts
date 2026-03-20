@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "rearcammod"
+rootProject.name = "holdcam"
 
 include("common")
 include("fabric")

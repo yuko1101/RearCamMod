@@ -1,4 +1,4 @@
-package io.github.yuko1101.rearcammod;
+package io.github.yuko1101.holdcam;
 
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.Perspective;
@@ -7,8 +7,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class RearCamMod {
-	public static final String MOD_ID = "rearcammod";
+public class HoldCam {
+	public static final String MOD_ID = "holdcam";
 
 	private static final CamKey REAR_CAM_KEY = new CamKey(new KeyBinding("key.rearcam", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, KeyBinding.Category.MISC), Perspective.THIRD_PERSON_FRONT);
 	private static final CamKey FRONT_CAM_KEY = new CamKey(new KeyBinding("key.frontcam", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, KeyBinding.Category.MISC), Perspective.THIRD_PERSON_BACK);

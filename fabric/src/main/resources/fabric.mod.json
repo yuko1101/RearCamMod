@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "rearcammod",
+  "id": "holdcam",
   "version": "${version}",
-  "name": "RearCamMod",
-  "description": "A rear-camera mod for Fabric and Forge.",
+  "name": "HoldCam",
+  "description": "Provides keybindings for 3rd person view while holding.",
   "authors": [
     "yuko1101"
   ],
   "contact": {
-    "homepage": "https://github.com/yuko1101/RearCamMod"
+    "homepage": "https://github.com/yuko1101/HoldCam"
   },
   "license": "MIT",
-  "icon": "assets/rearcammod/icon.png",
+  "icon": "assets/holdcam/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "io.github.yuko1101.rearcammod.fabric.RearCamModFabric"
+      "io.github.yuko1101.holdcam.fabric.HoldCamFabric"
     ]
   },
   "mixins": [
-    "rearcammod.mixins.json",
-    "fabric.rearcammod.mixins.json"
+    "holdcam.mixins.json",
+    "fabric.holdcam.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16.10",

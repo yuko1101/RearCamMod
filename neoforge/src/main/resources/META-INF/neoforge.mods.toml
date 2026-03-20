@@ -4,23 +4,23 @@ loaderVersion = "[2,)"
 license = "MIT"
 
 [[mods]]
-modId = "rearcammod"
+modId = "holdcam"
 version = "${version}"
-displayName = "RearCamMod"
+displayName = "HoldCam"
 authors = "yuko1101"
 description = '''
-
+Provides keybindings for 3rd person view while holding.
 '''
 #logoFile = ""
 
-[[dependencies.rearcammod]]
+[[dependencies.holdcam]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.rearcammod]]
+[[dependencies.holdcam]]
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21,)"
@@ -28,4 +28,4 @@ ordering = "NONE"
 side = "BOTH"
 
 [[mixins]]
-config = "rearcammod.mixins.json"
+config = "holdcam.mixins.json"

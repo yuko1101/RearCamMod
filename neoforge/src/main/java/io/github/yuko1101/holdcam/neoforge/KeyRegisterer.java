@@ -1,15 +1,15 @@
-package io.github.yuko1101.rearcammod.neoforge;
+package io.github.yuko1101.holdcam.neoforge;
 
-import io.github.yuko1101.rearcammod.RearCamMod;
+import io.github.yuko1101.holdcam.HoldCam;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 
-@EventBusSubscriber(modid = RearCamMod.MOD_ID)
+@EventBusSubscriber(modid = HoldCam.MOD_ID)
 public class KeyRegisterer {
     @SubscribeEvent
     public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-        for (var keyBinding : RearCamMod.getKeyBindings()) {
+        for (var keyBinding : HoldCam.getKeyBindings()) {
             event.register(keyBinding);
         }
     }

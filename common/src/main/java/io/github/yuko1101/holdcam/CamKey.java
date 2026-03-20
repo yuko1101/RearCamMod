@@ -1,4 +1,4 @@
-package io.github.yuko1101.rearcammod;
+package io.github.yuko1101.holdcam;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;

@@ -1,6 +1,6 @@
-package io.github.yuko1101.rearcammod.fabric.mixin;
+package io.github.yuko1101.holdcam.fabric.mixin;
 
-import io.github.yuko1101.rearcammod.RearCamMod;
+import io.github.yuko1101.holdcam.HoldCam;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftClientMixin {
     @Inject(method = "tick", at = @At("RETURN"))
     private void endTick(CallbackInfo ci) {
-        RearCamMod.onKeyStateUpdate();
+        HoldCam.onKeyStateUpdate();
     }
 }
