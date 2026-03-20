@@ -10,6 +10,12 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        loader: [fabric, neoforge]
+    env:
+      release: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
@@ -17,6 +23,19 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Setup Environment Variables
+        if: env.release
+        shell: bash
+        run: |
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          cat gradle.properties | grep minecraft_version | sed -n -r "s/^minecraft_version=(.+)$/\1/p" | xargs -I {} echo "MINECRAFT_VERSION={}" >> $GITHUB_ENV
+
+      - name: Set Project Version
+        if: env.release
+        shell: bash
+        run: |
+          sed -i -r "s/^mod_version=.+$/mod_version=$VERSION/" gradle.properties
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
@@ -26,21 +45,33 @@ jobs:
       - name: Build with Gradle
         run: gradle build
       
-      - name: Upload Artifact (Fabric)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: fabric
-          path: fabric/build/libs/*.jar
-
-      - name: Upload Artifact (NeoForge)
-        uses: actions/upload-artifact@v4
-        with:
-          name: neoforge
-          path: neoforge/build/libs/*.jar
+          name: ${{ matrix.loader }}
+          path: ${{ matrix.loader }}/build/libs/*.jar
 
       - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: env.release
         run: |
-          gh release create ${{github.ref_name}} --generate-notes fabric/build/libs/*.jar neoforge/build/libs/*.jar
+          gh release create ${{ github.ref_name }} --generate-notes ${{ matrix.loader }}/build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Artifact Paths
+        if: env.release
+        shell: bash
+        run: |
+          ls -d ${{ matrix.loader }}/build/libs/*.jar | awk '{print length($1), $1}' | sort -nk 1 | head -1 | sed -n -r "s/^[0-9]+ (.+)$/\1/p" | xargs -I {} echo "ARTIFACT_FILE={}" >> $GITHUB_ENV
+
+      - name: Publish to Modrinth
+        if: env.release
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: APh3E9kg
+          version: ${{ env.VERSION }}
+          loaders: ${{ matrix.loader }}
+          game-versions: ${{ env.MINECRAFT_VERSION }}
+          files: ${{ env.ARTIFACT_FILE }}
+          changelog: ${{ github.event.release.body }}
