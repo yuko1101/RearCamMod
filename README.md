@@ -1,2 +1,2 @@
-# RearCamMod
-A rear-camera mod for Fabric and Forge.
+# HoldCam
+Provides keybindings for 3rd person view while holding.
