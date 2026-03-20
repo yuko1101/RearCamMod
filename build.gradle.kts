@@ -62,6 +62,10 @@ subprojects {
         options.release = 21
     }
 
+    tasks.withType<Jar>().configureEach {
+        version = "${rootProject.properties["mod_version"]!!}+mc${rootProject.properties["minecraft_version"]!!}"
+    }
+
     // Configure Maven publishing.
     publishing {
         publications {
